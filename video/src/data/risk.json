@@ -1,0 +1,96 @@
+{
+  "generatedFrom": "dist/engine.js analyze() · scenarios.police",
+  "scenario": "假檢警・監管帳戶",
+  "number": "02-5550-0188",
+  "steps": [
+    {
+      "time": "0:00",
+      "text": "您好，這裡是地檢署，您涉及一起洗錢案。",
+      "score": 18,
+      "level": "low",
+      "l2": true,
+      "hits": [
+        {
+          "id": "authority",
+          "label": "假冒權威／司法機關",
+          "weight": 18
+        }
+      ],
+      "signals": [
+        "authority"
+      ],
+      "reasons": [
+        "假冒權威／司法機關"
+      ]
+    },
+    {
+      "time": "3:00",
+      "text": "偵查不公開，不要告訴家人，也不能掛斷。",
+      "score": 40,
+      "level": "medium",
+      "l2": true,
+      "hits": [
+        {
+          "id": "secrecy",
+          "label": "要求保密與隔離求助",
+          "weight": 22
+        }
+      ],
+      "signals": [
+        "authority",
+        "secrecy"
+      ],
+      "reasons": [
+        "假冒權威／司法機關",
+        "要求保密與隔離求助"
+      ]
+    },
+    {
+      "time": "8:00",
+      "text": "請立刻到提款機，轉帳到監管帳戶。",
+      "score": 98,
+      "level": "high",
+      "l2": true,
+      "hits": [
+        {
+          "id": "money",
+          "label": "要求移轉資金",
+          "weight": 25
+        },
+        {
+          "id": "pressure",
+          "label": "施加時間壓力或威脅",
+          "weight": 15
+        }
+      ],
+      "signals": [
+        "authority",
+        "secrecy",
+        "money",
+        "pressure"
+      ],
+      "reasons": [
+        "假冒權威／司法機關",
+        "要求保密與隔離求助",
+        "要求移轉資金",
+        "施加時間壓力或威脅"
+      ]
+    }
+  ],
+  "contrast": [
+    {
+      "text": "不要提供驗證碼",
+      "score": 0,
+      "safety": true,
+      "hits": []
+    },
+    {
+      "text": "請把驗證碼告訴我",
+      "score": 20,
+      "safety": false,
+      "hits": [
+        "credentials"
+      ]
+    }
+  ]
+}

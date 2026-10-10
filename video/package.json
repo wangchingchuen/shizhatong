@@ -1,0 +1,29 @@
+{
+  "name": "shizhatong-video",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "risk": "node scripts/compute-risk.mjs",
+    "shots": "node scripts/capture-demo.mjs",
+    "fonts": "python3 scripts/subset-fonts.py",
+    "audio": "node scripts/synth-audio.mjs",
+    "studio": "remotion studio src/index.ts",
+    "render": "node scripts/render-all.mjs"
+  },
+  "dependencies": {
+    "@expo-google-fonts/jetbrains-mono": "^0.4.1",
+    "@expo-google-fonts/noto-sans-tc": "^0.4.4",
+    "@react-three/fiber": "^8.17.10",
+    "@remotion/cli": "^4.0.534",
+    "@remotion/fonts": "^4.0.534",
+    "@remotion/renderer": "^4.0.534",
+    "@remotion/three": "^4.0.534",
+    "@types/react": "^18.3.12",
+    "@types/three": "^0.169.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "remotion": "^4.0.534",
+    "three": "^0.169.0",
+    "typescript": "^5.6.3"
+  }
+}
