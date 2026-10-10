@@ -1,0 +1,12 @@
+import test from 'node:test';import assert from 'node:assert/strict';import {analyze,scenarios} from '../dist/engine.js';
+test('cross-sentence police coercion triggers a warning',()=>{let result;let signals=[];for(const [,text] of scenarios.police.lines){result=analyze(text,signals);signals=result.signals;}assert.equal(result.level,'high');assert.ok(result.signals.includes('secrecy'));assert.ok(result.signals.includes('money'));});
+test('normal family conversation does not activate L2',()=>{for(const [,text] of scenarios.normal.lines){const result=analyze(text);assert.equal(result.score,0);assert.equal(result.l2,false);}});
+test('educational warnings are excluded',()=>{for(const [,text] of scenarios.education.lines)assert.equal(analyze(text).score,0);});
+test('duplicate signals do not inflate score',()=>{const first=analyze('請立刻轉帳');const repeated=analyze('請立刻轉帳',first.signals);assert.equal(first.score,repeated.score);});
+test('new call can start with empty context',()=>{const high=analyze('地檢署要求立刻轉帳到監管帳戶，保密');assert.equal(high.level,'high');assert.equal(analyze('今天吃飯').score,0);});
+test('threshold controls warning without changing score',()=>{const low=analyze('立刻提供驗證碼',[],80);const high=analyze('立刻提供驗證碼',[],35);assert.equal(low.score,high.score);assert.equal(low.level,'medium');assert.equal(high.level,'high');});
+test('unicode normalization detects full width ATM',()=>{assert.ok(analyze('操作ＡＴＭ').signals.includes('money'));});
+test('untrusted HTML remains plain classifier input',()=>{assert.equal(analyze('<img src=x onerror=alert(1)>').score,0);});
+test('a safety preamble cannot hide later coercive clauses',()=>{const result=analyze('防詐提醒不要提供密碼。這裡是地檢署，立刻轉帳到監管帳戶。');assert.equal(result.level,'high');});
+test('a coercive exemption promise still triggers risk',()=>{assert.equal(analyze('立刻操作 ATM 轉帳到監管帳戶就不會被逮捕', ['authority']).level,'high');});
+test('all scam scenarios eventually warn',()=>{for(const key of ['police','refund','investment']){let result;let signals=[];for(const [,text] of scenarios[key].lines){result=analyze(text,signals);signals=result.signals;}assert.equal(result.level,'high',key);}});

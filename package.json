@@ -1,0 +1,1 @@
+{"name":"shizhatong","version":"1.0.0","private":true,"type":"module","scripts":{"start":"node server.mjs","test":"node --test --test-isolation=none","check":"node --check dist/app.js && node --check dist/engine.js"}}
